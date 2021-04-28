@@ -48,7 +48,7 @@ Ex.:
 
 ## Estados de um processo
 
-![estados-processo](https://github.com/gustavocrod/os-process/images/estados-processos.png)
+![estados-processo](https://github.com/gustavocrod/os-process/blob/main/images/estados-processos.png)
  - em execução
  - à espera(para usar um recurso de um recurso usado por outro processo no momento)
  - pronto pra executar
