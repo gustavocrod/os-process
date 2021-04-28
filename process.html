@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Escalonadores - S.O.</title>
+        <meta name="description" content="Este é um site referente à estudos de Estrutura de Dados">
+    </head>
+    <body>
+        <h1>Escalonadores - S.O.</h1>
+        <p>Os escalonadores, de modo geral, possuem a função de escalar um processo para a execução, podendo este <strong>carregar um processo na memória para execução</strong>, sendo ativado com baixa frequência e controlando o grau de multiprogramação (escalonadores de processos ou longo prazo) ou <strong>alocar a CPU a um processo pronto para execução</strong>, sendo ativado com alta frequência e com uma alta velocidade (escalonadores de CPU ou curto prazo). Além disso, o escalonador é tido como parte do nível mais baixo do sistema operacional. Esses escalonadores podem ser de:</p>
+        <ul>
+            <li><strong>IO-Bound</strong></li>
+                <p>Os quais gastam mais tempo realizando I/O do que computação. Ou seja, o processo passa maior parte do tempo no estado de <strong><i>waiting</i></strong>, além de exigirem os chamados picos de IO (ou <i>IO burts</i>), onde o processo entra em um estado de aguardo por I/O.</p>
+            <li><strong>CPU-Bound</strong></li>
+                <p>Os quais gastam mais tempo realizando computação do que I/O. Ou seja, o processo passa maior parte do tempo no estado de <strong><i>running</i></strong>, além de exigirem os chamados picos de CPU (ou <i>CPU burst</i>), onde o processo entra em um estado de aguardo por instruções.</p>
+        </ul>
+        <p>Para que seja realizado o escalonamento dos processos, existem 2 componentes envolvidos para tal realização, sendo eles:</p>
+        <ul>
+            <li><strong>Dispatcher</strong> - Ou dispachante, o qual realiza o armazenamento e recuperação do processo. Quando um processo é trocado de estado, é feito um "snapshot" do seu contexto e é salvado na memória principal. Quando o processo volta a entrar no modo de execução (no processador), esse snapshot salvado é restaurado no processador e é continuada sua execução, ou seja, possui a principal função de <strong>atualizar o BCP</strong>.</li>
+            <br>
+            <li><strong>Escalonador</strong> - Definirá a implatação dos estados de cada processo, definindo qual próximo processo entrará para execução no pocessador.</li>
+        </ul>
+        <p>Esses escalonadores, podem possuir 2 tipos de categorias, os chamdos escalonadores <strong>preemptivos</strong> (Fará o stop em um processo atual, para dar o start em um processo com maior prioridade, como a ocorrência de um evento ou I/O) e <strong>não-preemptivo</strong> (Ignora os demais processos e prioriza o processo que está sendo executado atualmente, até o seu fim). Para esse escalonamento, existem os critérios exigidos, onde é levado em consideração a <strong>utilização de CPU</strong>, <strong>Throughput</strong> (número de processos que completam sua execução por tempo), <strong>Tournaround</strong> (tempo necessário para a execução total de um processo), <strong>Tempo de espera</strong> (Tempo que um processo fica na fila de <i>ready</i>) e <strong>tempo de resposta</strong> (Tempo entre o envio de uma requisição e a geração da resposta). Diante disso, o escalonamento desses processos, pode ser dividido em situações que se fazem a sua necessidade, ou seja, os tipos de sitações de ambiente em que definirá o comportamento dos processos pelo eslaconador, onde:</p>
+        <ul>
+            <strong>Escalonamento Batch</strong>
+            <br>
+            <br>
+                <ul>
+                    <li>FCFS</li>
+                        <p>Tem a possibilidade de um algoritmo <strong>First Come, First Served</strong>, onde o primeiro processo que for definido, será o primeiro a ser executado, além de ser não-preemptivo. Ou seja, fará a execução de seus processos a partir de uma ordem de chegada. Seguindo o contexto abaixo:</p>
+                        <pre>
+                     ---------- ---------
+                    | Processo | Duração |
+                     ---------- ---------
+                        P1         24s
+                        P2         3s
+                        P3         3s
+
+                     ------------------- ---- ----
+                    |        24s        | 3s | 3s |
+                     ------------------- ---- ----
+                             P1           P2   P3
+
+                Diante disso, o <strong>tempo médio da espera</strong>, é tido pelo tempo total de execução de todos os processos, onde: TME = (0+24+27)/3 = 17
+                Onde este será o tempo em que cada processo foi iniciado:
+
+                P1 = 0 (Foi iniciado primeiro, ou seja, demorou 0s para iniciar)
+
+                P2 = 24s (Só começou a executar, desde o tempo inicial, a partir de 24s, que foi  tempo de finalização do P1)
+
+                P3 = 27s (Desde o tempo inicial, só foi executado quando bateu 27 segundos, onde o P1 e P2 terminaram)
+
+                        </pre>
+                    <li>Shortest Job First</li>
+                        <p>Ou "<strong>processo mais curto, primeiro</strong>". Onde como seu próprio nome define, o esclaonador definirá para execução, os processos que tiverem um menor tempo para o seu término de execução, o qual também é não-preemptivo. Seguindo o seguinte contexto:</p>
+                        <pre>
+                     ---------- ---------
+                    | Processo | Duração |
+                     ---------- ---------
+                        P1         6s
+                        P2         8s
+                        P3         7s
+                        P4         3s
+
+                     ---- -------- ---------- ------------
+                    | 3s |   6s   |    7s    |     8s     |
+                     ---- -------- ---------- ------------
+                      P4     P1        P3          P2
+
+                Diante disso, o <strong>tempo médio da espera</strong>, é tido pelo tempo total de execução de todos os processos, onde: TME = (0+3+9+16)/4 = 7
+                Onde este será o tempo em que cada processo foi iniciado:
+
+                P4 = 0 (Foi iniciado primeiro, ou seja, demorou 0s para iniciar)
+
+                P1 = 3s (Demorou 6s para iniciar)
+
+                P3 = 9s (Demorou 9s para inicar)
+
+                P2 = 16s (Demorou 16s para iniciar)
+
+                        </pre>
+                    <li>Priority</li>
+                        <p>Sendo um algoritmo de escalonamento onde é definida a <strong>prioridade</strong> dos processos da fila, ou seja, serão executados primeiro, aqueles com uma maior prioridade definida. Este é um algoritmo não-preemptivo o qual segue o contexto:</p>
+                        <pre>
+                     ---------- --------- ------------
+                    | Processo | Duração | Prioridade |
+                     ---------- --------- ------------
+                        P1         10s         3
+                        P2         1s          1
+                        P3         2s          4
+                        P4         1s          5
+
+                     ---- ------------ ----- ----
+                    | 1s |     10s    |  2s | 1s |
+                     ---- ------------ ----- ----
+                      P2       P1        P3   P4
+
+                Diante disso, o <strong>tempo médio da espera</strong>, é tido pelo tempo total de execução de todos os processos, onde: TME = (0+1+11+13)/4 = 7
+                Onde este será o tempo em que cada processo foi iniciado:
+
+                P2 = 0 (Foi iniciado primeiro, ou seja, demorou 0s para iniciar)
+
+                P1 = 1s (Demorou 1s para iniciar)
+
+                P3 = 11s (Demorou 11s para inicar)
+
+                P4 = 13s (Demorou 13s para iniciar)
+
+                        </pre>
+                    <li>RR</li>
+                        <p>Ou <strong>round-robin</strong> que também é conhecido como tempo compartilhado, onde é o algoritmo que recebe um tempo definido para todos os processos, o chamado <strong>Quantum</strong>, ou seja, cada processo, indepente do seu tempo de execução, só poderá executar um tempo X (Quantum). Este é um algoritmo de escalonamento preemptivo, com o seguinte contexto:</p>
+                        <pre>
+                    Quantum = 4  (Este seré o delimitador de quanto de tempo um processo poderá executar)
+
+                     ---------- ---------
+                    | Processo | Duração |
+                     ---------- ---------
+                        P1         24s
+                        P2         3s
+                        P3         3s
+
+                     ---- ---- ---- ---- ---- ---- ---- ----
+                    | 4s | 3s | 3s | 4s | 4s | 4s | 4s | 4s |
+                     ---- ---- ---- ---- ---- ---- ---- ----
+                      P1   P2   P3   P1   P1   P1   P1   P1
+
+
+                    Perceba que como cada processo só pode executar 4 segundos (quantum), o processo P1 foi dividido em execuções até que fosse finalizado.
+                    Os demais processos (P2 e P3) não sofreram essa divisão, pelo fato de demorarem apenas 3 segundos para finalizare.
+
+                    Diante disso, o <strong>tempo médio da espera</strong>, é tido pelo tempo total de execução de todos os processos, onde: TME = (6+4+7)/3 = 5,66
+                    Onde este será o tempo em que cada processo foi iniciado:
+
+                    P1 = 0 + 6 (Foi iniciado primeiro, demorando 0s para iniciar. Porém, para sua continuação, demorou 6s para ser iniciado de novo)
+
+                    P2 = 4s (Demorou 4s até ser iniciado)
+
+                    P3 = 7s (Demorou 7s até ser iniciado)
+
+                        </pre>
+                        <p>Esse escalonamento <i>Round-Robin</i> é um pouco menos simples que os demais, devido ao seu determinador de tempo, o Quantum. Porém, basta atentar-se que independente do tempo que um processo demore para ser executado, ele só poderá executar uma quantidade de tempo igual a permite pelo Quantum. Segue abaixo um exemplo abaixo de apenas 1 processo se comportando em diferentes quantidades de Quantum (O <i>context switches</i> é a quantidade de trocas de estado que esse processo sofreu):</p>
+                        <img src="https://media.cheggcdn.com/study/524/524e4796-026c-42d8-8f90-05cf067e5dc1/image.png">
+                </ul>
+
+        </ul>
+
+
+    </body>
+</html>
