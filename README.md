@@ -1,11 +1,14 @@
 # :closed_book: PROCESSOS
 
+
 *Task: Implemente uma representação de processo (do ponto de vista do sistema operacional)*
 
 - Crie uma estrutura de dados que represente o processo.
 - Implemente um gerenciador de processos, que "simule" os possíveis estados de um processo.
 - Implemente diferentes políticas de escalonamento de processos. Considere que para cada processo existem informações pertinentes associadas (Prioridades do processo 1 até 20 e mecanismos de incremento e decremento de prioridades).
 Cada processo em execução pode ser interrompido por preempção ou por chamada de sistema (escolha isso aleatoriamente). Decremente a prioridade se o processo for interrompido por preempção e incremente a prioridade em caso contrário.
+
+[Clicke aqui](https://github.com/gustavocrod/os-process/blob/main/src/README.md) para saber como executar.
 
 ## :arrow_forward: Definição de Processo
 Um processo é caracterizado por um **programa em execução**.
