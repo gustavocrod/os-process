@@ -71,31 +71,34 @@ Existem diferentes algoritmos
 
 O maior problema para a implementação de um algoritmo de escalonamento é a natureza imprevisível do comportamento de um processo: não se sabe se um processo x usará intensamente processador, entrada/saída, memória ou quaisquer outros recursos computacionais.
 
-#### 2. Algoritmos de escalonamento:
+#### 2. Algoritmos de escalonamento implementados nesse trabalho:
 Algoritmos de escalonamento podem ser **preemptivos** ou **não preemptivos**;
+
+##### Algoritmos não preemptivos 
+
+**não permitem troca de contexto**. Isto é, quando um processo entra em execução, ele será executado até o fim.
+
+* First Come, Frist Served - FCFS (*FIFO*);
+* Shortest job first - SJF (sem preempção)
+  
+    Menor processo primeiro, não preemptivo. Pode-se dizer que é um algoritmo guloso. Devido ao seu comportmento, é grande a probabilidade de *starvation*(postergação indefinida) para os processos maiores.
+    **Originalmente é executado sem preempção, porém esta pode ser implementada**. (NÃO IMPLEMENTADO)
+
+##### Algoritmos preemptivos:
 
 Os algoritmos preemptivos salvam o contexto do processo a ser interrompido. Esse contexto é salvo nos registradores e na memória responsável pela execução do processo em questão. Isso permite a **troca de contexto** dos processos, trocando em miúdos: trocar um processo não terminado por outro que está para ser executado agora(devido ao algoritmo de escalonamento);
 
-Algoritmos não preemptivos **não permitem troca de contexto**. Isto é, quando um processo entra em execução, ele será executado até o fim.
-
-Alguns algoritmos não preemptivos:
-* FIFO(*First in, First out*);
-* SJF(Shortest job first)
+* Round-Robin:
+   
+  Este algoritmo atribui ao escalonador a definição de um **quantum (*timeslice*)** para cada processo. Após o encerramento da fatia, o processo sofre uma interrupção voluntária.
+  Mantém-se uma lista circular de processos prontos(ready);
   
-    Menor processo primeiro, não preemptivo. Pode-se dizer que é um algoritmo guloso. Devido ao seu comportmento, é grande a probabilidade de *starvation*(postergação indefinida) para os processos maiores.
-    **Originalmente é executado sem preempção, porém esta pode ser implementada**.
-
-Alguns algoritmos de escalonamento preemptivos:
-
 * Escalonamento por prioridade:
     
     Prioridades são decididas e atribuídas aos processos. Desempate entre processos de mesma prioridade pode ocorrer usando de outros algoritmos, como o FIFO. A atribuição das prioridades pode ser ascendente ou descedente.
     **Um processo de baixa prioridade está sujeito a *starvation***.
-    **Para tratar disso, utiliza-se do conceitos de *aging*(envelhecimento) o qual consiste no aumento da prioridade em razão do tempo decorrido na espera**.
+    **Para tratar disso, utiliza-se do conceitos de *aging*(envelhecimento) o qual consiste no aumento da prioridade em razão do tempo decorrido na espera** (NÃO IMPLEMENTADO)
     
 
-* Round-Robin:
-  
-  Este algoritmo atribui ao escalonador a definição de um **quantum(*timeslice*)** para cada processo. Após o encerramento da fatia, o processo sofre uma interrupção voluntária.
-  Mantém-se uma lista circular de processos prontos(ready);
+
   
